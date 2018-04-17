@@ -14,4 +14,8 @@ public class Movie {
         this.year = year;
     }
 
+    public String getTitle() { return title; }
+    public String getImageUrl() { return imageUrl; }
+    public int getYear() { return year; }
+
 }
