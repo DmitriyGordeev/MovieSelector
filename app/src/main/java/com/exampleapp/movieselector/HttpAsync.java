@@ -47,6 +47,7 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
         super.onPostExecute(result);
     }
 
+
     private String readStream(InputStream input) {
 
         BufferedReader reader = null;
@@ -75,6 +76,11 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
         }
 
         return response.toString();
+    }
+
+
+    public String getResponse() {
+        return response;
     }
 
 }
