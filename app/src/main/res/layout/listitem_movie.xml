@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/itemWrapper"
+        android:layout_width="420dp"
+        android:layout_height="120dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ib_moviePoster"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_movieTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:text="no data"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_movieYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:text="no data" />
+        </LinearLayout>
+
+    </LinearLayout>
+</android.widget.LinearLayout>
