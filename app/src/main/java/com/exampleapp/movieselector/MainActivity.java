@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onFavorites(View view) {
-        Intent intent = new Intent(MainActivity.this, Favorites.class);
+        Intent intent = new Intent(MainActivity.this, FavoritesActivity.class);
         startActivity(intent);
     }
 }
