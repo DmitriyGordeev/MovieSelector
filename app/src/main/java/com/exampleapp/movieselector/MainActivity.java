@@ -3,6 +3,7 @@ package com.exampleapp.movieselector;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         HttpAsync httpAsync = new HttpAsync();
         httpAsync.execute("https://www.omdbapi.com/?apikey=69d51abd&t=back");
 
-        Toast.makeText(this, httpAsync.getResponse(), Toast.LENGTH_SHORT).show();
+//        Log.i("[HTTP RESPONSE]", httpAsync.getResponse());
+//        Toast.makeText(this, httpAsync.getResponse(), Toast.LENGTH_SHORT).show();
     }
 
     public void onFavorites(View view) {
