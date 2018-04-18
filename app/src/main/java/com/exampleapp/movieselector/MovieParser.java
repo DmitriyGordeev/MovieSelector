@@ -23,8 +23,6 @@ public class MovieParser {
                     movieObject.getString("Title"),
                     movieObject.getString("Poster"),
                     movieObject.getString("Year")));
-
-            Log.i("MovieParser", movieObject.getString("Title"));
         }
 
         return output;

@@ -66,7 +66,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             int posterIndex = c.getColumnIndex("poster");
 
             do {
-                Movie m = new Movie(c.getString(titleIndex), c.getString(yearIndex), c.getString(posterIndex));
+                Movie m = new Movie(c.getString(titleIndex), c.getString(posterIndex), c.getString(yearIndex));
                 output.add(m);
             }
             while (c.moveToNext());
