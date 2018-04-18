@@ -61,12 +61,13 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
         if(c.moveToFirst())
         {
+            int idIndex = c.getColumnIndex("id");
             int titleIndex = c.getColumnIndex("title");
             int yearIndex = c.getColumnIndex("year");
             int posterIndex = c.getColumnIndex("poster");
 
             do {
-                Movie m = new Movie(c.getString(titleIndex), c.getString(posterIndex), c.getString(yearIndex));
+                Movie m = new Movie(c.getInt(idIndex), c.getString(titleIndex), c.getString(posterIndex), c.getString(yearIndex));
                 output.add(m);
             }
             while (c.moveToNext());
@@ -77,7 +78,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public boolean remove(int index) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.delete("movies", "id=" + index, null) > 0;
+
+        Log.i("[database] index = ", Integer.toString(index));
+        return db.delete("movies", "id=" + Integer.toString(index), null) > 0;
     }
 
 }

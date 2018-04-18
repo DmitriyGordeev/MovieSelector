@@ -19,7 +19,7 @@ public class MovieParser {
 
         for(int i = 0; i < jsonArray.length(); i++) {
             JSONObject movieObject = (JSONObject) jsonArray.get(i);
-            output.add(new Movie(
+            output.add(new Movie(0,
                     movieObject.getString("Title"),
                     movieObject.getString("Poster"),
                     movieObject.getString("Year")));

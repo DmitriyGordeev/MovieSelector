@@ -2,6 +2,7 @@ package com.exampleapp.movieselector;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,10 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
                     @Override
                     public void onClick(View view) {
 
+                        Log.i("[adapter list position]", Integer.toString(position));
+
                         if(rmMode) {
-                            database.remove(position);
+                            database.remove(m.getId());
                         }
                         else {
                             database.put(m);
