@@ -15,8 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -30,20 +32,29 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected Bitmap doInBackground(String...urls) {
-        String url = urls[0];
-        Bitmap image = null;
 
-        Log.i("downloading image", url);
+        URL url;
+        HttpURLConnection connection = null;
 
         try {
-            InputStream input = new URL(url).openStream();
-            image = BitmapFactory.decodeStream(input);
+            url = new URL(urls[0]);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+
+            InputStream inputStream = connection.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(inputStream);
+
+            Bitmap bmp = BitmapFactory.decodeStream(bis);
+            return bmp;
         }
         catch(IOException e) {
             e.printStackTrace();
         }
+        finally {
+            connection.disconnect();
+        }
 
-        return image;
+        return null;
     }
 
     protected void onPostExecute(Bitmap result) {
@@ -88,6 +99,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             ImageView iv_moviePoster = (ImageView) v.findViewById(R.id.iv_moviePoster);
             Button btn_addToFavorites = (Button) v.findViewById(R.id.btn_addToFavorites);
 
+            Log.i("adapter item", m.getImageUrl());
             new DownloadImageTask(iv_moviePoster).execute(m.getImageUrl());
 
             if(rmMode) {
