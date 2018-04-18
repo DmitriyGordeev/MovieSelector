@@ -1,11 +1,9 @@
 package com.exampleapp.movieselector;
 
-
-import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,46 +11,31 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+public class SimpleHttp {
 
-public class HttpAsync extends AsyncTask<String, Integer, String> {
-
-    String response;
-
-    @Override
-    protected String doInBackground(String ... urls) {
+    public static String request(String urlString) throws IOException {
 
         URL url;
-        HttpURLConnection connection = null;
+        HttpURLConnection urlConnection;
 
-        try {
-            url = new URL(urls[0]);
-            connection = (HttpURLConnection) url.openConnection();
-            int responseCode = connection.getResponseCode();
-            if(responseCode == HttpURLConnection.HTTP_OK) {
-                response = readStream(connection.getInputStream());
-            }
+//        url = new URL("https://www.omdbapi.com/?apikey=69d51abd&t=back");
 
-            return response;
-        }
-        catch(MalformedURLException e) {
-            e.printStackTrace();
-        }
-        catch(IOException e) {
-            e.printStackTrace();
+        url = new URL(urlString);
+        urlConnection = (HttpURLConnection) url.openConnection();
+
+        String response = "";
+        if(urlConnection.getResponseCode() == 200) {
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            response = readStream(in);
+            Log.i("connection status", Integer.toString(urlConnection.getResponseCode()));
         }
 
-//        connection.disconnect();
-        return null;
+        urlConnection.disconnect();
+        Log.i("response", response);
+        return response;
     }
 
-
-    @Override
-    protected void onPostExecute(String result) {
-        super.onPostExecute(result);
-    }
-
-
-    private String readStream(InputStream input) {
+    private static String readStream(InputStream input) {
 
         BufferedReader reader = null;
         StringBuffer responseBuffer = new StringBuffer();
@@ -80,13 +63,7 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
         }
 
         Log.i("responseBuffer", responseBuffer.toString());
-
         return responseBuffer.toString();
-    }
-
-
-    public String getResponse() {
-        return response;
     }
 
 }
