@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class DataBaseHandler extends SQLiteOpenHelper {
 
     private String db_name;
-    private final static String LOGTAG = "[DataBaseHandler]";
 
     public DataBaseHandler(Context context, String name) {
         super(context, name, null, 1);
@@ -78,8 +77,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public boolean remove(int index) {
         SQLiteDatabase db = getReadableDatabase();
-
-        Log.i("[database] index = ", Integer.toString(index));
         return db.delete("movies", "id=" + Integer.toString(index), null) > 0;
     }
 

@@ -18,12 +18,14 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
     DataBaseHandler database;
     boolean rmMode;
+    List<Movie> movies;
 
     public MovieAdapter(Context context, int resource, List<Movie> items, boolean rmMode) {
         super(context, resource, items);
         database = new DataBaseHandler(context, "movies_database");
 
         this.rmMode = rmMode;
+        movies = items;
 
         // TODO: check database status
     }
@@ -61,13 +63,13 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
             if(btn_addToFavorites != null) {
                 btn_addToFavorites.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View view) {
-
-                        Log.i("[adapter list position]", Integer.toString(position));
-
                         if(rmMode) {
                             database.remove(m.getId());
+                            movies.remove(position);
+                            notifyDataSetChanged();
                         }
                         else {
                             database.put(m);
