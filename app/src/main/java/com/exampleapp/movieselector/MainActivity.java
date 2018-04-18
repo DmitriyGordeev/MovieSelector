@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     ListView movieList;
     MovieAdapter movieAdapter;
+    ArrayList<Movie> movies;
     HttpAsync httpAsync;
 
     @Override
@@ -21,21 +24,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Back to the Future", "url 1", "2001"));
-        movies.add(new Movie("Back to the Future II", "url 2", "2002"));
-        movies.add(new Movie("Back to the Future III", "url 3", "2003"));
+//        ArrayList<Movie> movies = new ArrayList<>();
+//        movies.add(new Movie("Back to the Future", "url 1", "2001"));
+//        movies.add(new Movie("Back to the Future II", "url 2", "2002"));
+//        movies.add(new Movie("Back to the Future III", "url 3", "2003"));
 
-
-        movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
-        movieList = (ListView) findViewById(R.id.moviesList);
-        movieList.setAdapter(movieAdapter);
-
+        movies = new ArrayList<>();
 
         httpAsync = new HttpAsync();
         httpAsync.delegate = this;
-        httpAsync.execute("https://www.omdbapi.com/?apikey=69d51abd&t=back");
-
+        httpAsync.execute("https://www.omdbapi.com/?apikey=69d51abd&s=back");
     }
 
     public void onFavorites(View view) {
@@ -46,9 +44,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     @Override
     public void processFinish(String response) {
 
-        // String response = httpAsync.getResponse();
-        Log.i("DELEGATE", response);
+        try {
+            movies = MovieParser.parse(response);
 
+            movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
+            movieList = (ListView) findViewById(R.id.moviesList);
+            movieList.setAdapter(movieAdapter);
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

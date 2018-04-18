@@ -1,5 +1,7 @@
 package com.exampleapp.movieselector;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,8 +21,10 @@ public class MovieParser {
             JSONObject movieObject = (JSONObject) jsonArray.get(i);
             output.add(new Movie(
                     movieObject.getString("Title"),
-                    movieObject.getString("Year"),
-                    movieObject.getString("Poster")));
+                    movieObject.getString("Poster"),
+                    movieObject.getString("Year")));
+
+            Log.i("MovieParser", movieObject.getString("Title"));
         }
 
         return output;
