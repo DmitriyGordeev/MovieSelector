@@ -40,8 +40,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     }
 
-
-    /* put methods: */
     public void put(Movie movie) {
 
         SQLiteDatabase db = getWritableDatabase();
@@ -55,8 +53,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-
-    /* retreive methods: */
     public ArrayList<Movie> get() {
 
         ArrayList<Movie> output = new ArrayList<>();
@@ -79,7 +75,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         return output;
     }
 
-    /* remove specific row by index: */
     public boolean remove(int index) {
         SQLiteDatabase db = getReadableDatabase();
         return db.delete("movies", "id=" + index, null) > 0;

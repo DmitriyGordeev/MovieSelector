@@ -19,11 +19,14 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     ArrayList<Movie> movies;
     HttpAsync httpAsync;
 
+    DataBaseHandler database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        database = new DataBaseHandler(this, "movies_database");
         movies = new ArrayList<>();
 
         httpAsync = new HttpAsync();
