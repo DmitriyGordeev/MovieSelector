@@ -43,6 +43,7 @@
                 android:id="@+id/btn_addToFavorites"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:onClick="onAddToFavorites"
                 android:text="@string/add_to_favorites" />
         </LinearLayout>
 
