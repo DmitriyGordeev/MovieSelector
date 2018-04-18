@@ -17,6 +17,7 @@ import java.net.URL;
 public class HttpAsync extends AsyncTask<String, Integer, String> {
 
     String response;
+    AsyncResponse delegate;
 
     @Override
     protected String doInBackground(String ... urls) {
@@ -48,7 +49,7 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        super.onPostExecute(result);
+        delegate.processFinish(result);
     }
 
 
