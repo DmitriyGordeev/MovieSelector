@@ -10,16 +10,17 @@ public class FavoritesActivity extends AppCompatActivity {
 
     ListView movieList;
     MovieAdapter movieAdapter;
+    DataBaseHandler database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
-        ArrayList<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Back to the Future", "url 1", "2001"));
-        movies.add(new Movie("Back to the Future II", "url 2", "2002"));
-        movies.add(new Movie("Back to the Future III", "url 3", "2003"));
+        database = new DataBaseHandler(this, "movies_database");
+
+        // TODO: check database errors
+        ArrayList<Movie> movies = database.get();
 
 
         movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
