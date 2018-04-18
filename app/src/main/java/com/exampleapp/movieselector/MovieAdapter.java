@@ -99,7 +99,6 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             ImageView iv_moviePoster = (ImageView) v.findViewById(R.id.iv_moviePoster);
             Button btn_addToFavorites = (Button) v.findViewById(R.id.btn_addToFavorites);
 
-            Log.i("adapter item", m.getImageUrl());
             new DownloadImageTask(iv_moviePoster).execute(m.getImageUrl());
 
             if(rmMode) {
