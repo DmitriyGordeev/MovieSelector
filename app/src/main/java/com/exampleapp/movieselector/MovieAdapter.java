@@ -2,6 +2,9 @@ package com.exampleapp.movieselector;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +15,43 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+
+class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+    ImageView imageView;
+
+    public DownloadImageTask(ImageView imageView) {
+        this.imageView = imageView;
+    }
+
+    protected Bitmap doInBackground(String...urls) {
+        String url = urls[0];
+        Bitmap image = null;
+
+        Log.i("downloading image", url);
+
+        try {
+            InputStream input = new URL(url).openStream();
+            image = BitmapFactory.decodeStream(input);
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        return image;
+    }
+
+    protected void onPostExecute(Bitmap result) {
+        if(result != null) {
+            imageView.setImageBitmap(result);
+        }
+    }
+}
 
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
@@ -48,6 +87,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             TextView tv_movieYear = (TextView) v.findViewById(R.id.tv_movieYear);
             ImageView iv_moviePoster = (ImageView) v.findViewById(R.id.iv_moviePoster);
             Button btn_addToFavorites = (Button) v.findViewById(R.id.btn_addToFavorites);
+
+            new DownloadImageTask(iv_moviePoster).execute(m.getImageUrl());
 
             if(rmMode) {
                 btn_addToFavorites.setText("Remove");
