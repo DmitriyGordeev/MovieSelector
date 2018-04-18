@@ -38,7 +38,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             }
 
             if(tv_movieYear != null) {
-                tv_movieYear.setText(Integer.toString(m.getYear()));
+                tv_movieYear.setText(m.getYear());
             }
 
         }

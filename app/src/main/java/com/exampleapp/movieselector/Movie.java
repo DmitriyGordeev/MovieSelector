@@ -5,10 +5,10 @@ public class Movie {
 
     private String title;
     private String imageUrl;
-    private int year;
+    private String year;
 
 
-    public Movie(String title, String imageUrl, int year) {
+    public Movie(String title, String imageUrl, String year) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.year = year;
@@ -16,6 +16,6 @@ public class Movie {
 
     public String getTitle() { return title; }
     public String getImageUrl() { return imageUrl; }
-    public int getYear() { return year; }
+    public String getYear() { return year; }
 
 }

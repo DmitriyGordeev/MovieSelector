@@ -22,13 +22,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         setContentView(R.layout.activity_main);
 
         ArrayList<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Back to the Future", "url 1", 2001));
-        movies.add(new Movie("Back to the Future II", "url 2", 2002));
-        movies.add(new Movie("Back to the Future III", "url 3", 2003));
+        movies.add(new Movie("Back to the Future", "url 1", "2001"));
+        movies.add(new Movie("Back to the Future II", "url 2", "2002"));
+        movies.add(new Movie("Back to the Future III", "url 3", "2003"));
 
 
         movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
-
         movieList = (ListView) findViewById(R.id.moviesList);
         movieList.setAdapter(movieAdapter);
 
@@ -46,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void processFinish(String response) {
-        Log.i("DELEGATE", httpAsync.getResponse());
+
+        // String response = httpAsync.getResponse();
+        Log.i("DELEGATE", response);
+
     }
+
 }

@@ -17,9 +17,9 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorites);
 
         ArrayList<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Back to the Future", "url 1", 2001));
-        movies.add(new Movie("Back to the Future II", "url 2", 2002));
-        movies.add(new Movie("Back to the Future III", "url 3", 2003));
+        movies.add(new Movie("Back to the Future", "url 1", "2001"));
+        movies.add(new Movie("Back to the Future II", "url 2", "2002"));
+        movies.add(new Movie("Back to the Future III", "url 3", "2003"));
 
 
         movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
