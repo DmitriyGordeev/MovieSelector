@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         try {
             movies = MovieParser.parse(response);
 
-            movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
+            movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies, false);
             movieList = (ListView) findViewById(R.id.moviesList);
             movieList.setAdapter(movieAdapter);
         }

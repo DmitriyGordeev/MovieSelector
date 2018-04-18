@@ -23,7 +23,7 @@ public class FavoritesActivity extends AppCompatActivity {
         ArrayList<Movie> movies = database.get();
 
 
-        movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies);
+        movieAdapter = new MovieAdapter(this, R.layout.listitem_movie, movies, true);
 
         movieList = (ListView) findViewById(R.id.favoriteList);
         movieList.setAdapter(movieAdapter);

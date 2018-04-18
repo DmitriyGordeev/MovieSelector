@@ -16,16 +16,19 @@ import java.util.List;
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
     DataBaseHandler database;
+    boolean rmMode;
 
-    public MovieAdapter(Context context, int resource, List<Movie> items) {
+    public MovieAdapter(Context context, int resource, List<Movie> items, boolean rmMode) {
         super(context, resource, items);
         database = new DataBaseHandler(context, "movies_database");
+
+        this.rmMode = rmMode;
 
         // TODO: check database status
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         View v = convertView;
 
@@ -43,6 +46,10 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             ImageView iv_moviePoster = (ImageView) v.findViewById(R.id.iv_moviePoster);
             Button btn_addToFavorites = (Button) v.findViewById(R.id.btn_addToFavorites);
 
+            if(rmMode) {
+                btn_addToFavorites.setText("Remove");
+            }
+
             if(tv_movieTitle != null) {
                 tv_movieTitle.setText(m.getTitle());
             }
@@ -55,7 +62,13 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
                 btn_addToFavorites.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        database.put(m);
+
+                        if(rmMode) {
+                            database.remove(position);
+                        }
+                        else {
+                            database.put(m);
+                        }
                     }
                 });
             }
