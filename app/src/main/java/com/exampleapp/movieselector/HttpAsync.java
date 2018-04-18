@@ -2,6 +2,7 @@ package com.exampleapp.movieselector;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOError;
@@ -38,6 +39,8 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
             e.printStackTrace();
         }
 
+
+//        connection.disconnect();
         return null;
     }
 
@@ -74,6 +77,8 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
                 }
             }
         }
+
+        Log.i("responseBuffer", responseBuffer.toString());
 
         return responseBuffer.toString();
     }

@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         HttpAsync httpAsync = new HttpAsync();
         httpAsync.execute("https://www.omdbapi.com/?apikey=69d51abd&t=back");
 
-//        Log.i("[HTTP RESPONSE]", httpAsync.getResponse());
-//        Toast.makeText(this, httpAsync.getResponse(), Toast.LENGTH_SHORT).show();
     }
 
     public void onFavorites(View view) {

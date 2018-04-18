@@ -23,4 +23,12 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.exampleapp.movieselector", appContext.getPackageName());
     }
+
+
+    @Test
+    public void test_HttpAsync() {
+        HttpAsync httpAsync = new HttpAsync();
+        httpAsync.execute("https://www.omdbapi.com/?apikey=69d51abd&t=back");
+        System.out.println(httpAsync.response);
+    }
 }
