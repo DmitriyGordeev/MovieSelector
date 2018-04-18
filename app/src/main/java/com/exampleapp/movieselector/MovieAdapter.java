@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,8 +31,9 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         Movie m = getItem(position);
         if (m != null) {
 
-            TextView tv_movieTitle = (TextView)v.findViewById(R.id.tv_movieTitle);
-            TextView tv_movieYear = (TextView)v.findViewById(R.id.tv_movieYear);
+            TextView tv_movieTitle = (TextView) v.findViewById(R.id.tv_movieTitle);
+            TextView tv_movieYear = (TextView) v.findViewById(R.id.tv_movieYear);
+            ImageButton iv_moviePoster = (ImageButton) v.findViewById(R.id.iv_moviePoster);
 
             if(tv_movieTitle != null) {
                 tv_movieTitle.setText(m.getTitle());
