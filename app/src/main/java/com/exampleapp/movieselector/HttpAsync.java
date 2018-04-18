@@ -32,7 +32,7 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
             if(responseCode == HttpURLConnection.HTTP_OK) {
                 response = readStream(connection.getInputStream());
             }
-
+            connection.disconnect();
             return response;
         }
         catch(MalformedURLException e) {
@@ -42,7 +42,6 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
             e.printStackTrace();
         }
 
-//        connection.disconnect();
         return null;
     }
 
