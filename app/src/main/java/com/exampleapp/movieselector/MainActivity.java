@@ -1,6 +1,7 @@
 package com.exampleapp.movieselector;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     String requestUrl;
 
     DataBaseHandler database;
+    Handler handler;
+    String searchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         database = new DataBaseHandler(this, "movies_database");
         movies = new ArrayList<>();
 
+        handler = new Handler();
     }
 
     public void onFavorites(View view) {
@@ -78,13 +82,25 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             @Override
             public boolean onQueryTextChange(String s) {
 
-                if(!s.isEmpty()) {
-                    httpAsync = new HttpAsync();
-                    httpAsync.delegate = MainActivity.this;
-                    httpAsync.execute(requestUrl + s);
-                }
+                searchQuery = s;
+                handler.removeCallbacksAndMessages(null);
 
-                return false;
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        searchQuery = searchQuery.replace(" ", "_");
+
+                        Log.i("Runnable", "searchQuery = " + searchQuery);
+                        if(!searchQuery.isEmpty()) {
+                            httpAsync = new HttpAsync();
+                            httpAsync.delegate = MainActivity.this;
+                            httpAsync.execute(requestUrl + searchQuery);
+                        }
+                    }
+                }, 700);
+
+                return true;
             }
         });
 
