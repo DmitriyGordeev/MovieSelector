@@ -90,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
                     public void run() {
 
                         searchQuery = searchQuery.replace(" ", "_");
-
-                        Log.i("Runnable", "searchQuery = " + searchQuery);
                         if(!searchQuery.isEmpty()) {
                             httpAsync = new HttpAsync();
                             httpAsync.delegate = MainActivity.this;
