@@ -24,21 +24,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-    ImageView imageView;
+class RequestImage {
 
-    public DownloadImageTask(ImageView imageView) {
-        this.imageView = imageView;
-    }
-
-    protected Bitmap doInBackground(String...urls) {
+    public static Bitmap request(String requestUrl) {
 
         URL url;
         HttpURLConnection connection = null;
 
         try {
-            url = new URL(urls[0]);
+            url = new URL(requestUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
 
@@ -58,12 +56,6 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         }
 
         return null;
-    }
-
-    protected void onPostExecute(Bitmap result) {
-        if(result != null) {
-            imageView.setImageBitmap(result);
-        }
     }
 }
 
@@ -104,7 +96,17 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             ImageView iv_moviePoster = (ImageView) v.findViewById(R.id.iv_moviePoster);
             ImageButton btn_addToFavorites = (ImageButton) v.findViewById(R.id.btn_addToFavorites);
 
-            new DownloadImageTask(iv_moviePoster).execute(m.getImageUrl());
+            // download image:
+            Observable.fromCallable(() -> {
+                return RequestImage.request(m.getImageUrl());
+            })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe((response) -> {
+                        if(response != null) {
+                            iv_moviePoster.setImageBitmap(response);
+                        }
+                    });
 
             if(rmMode) {
                 btn_addToFavorites.setImageResource(android.R.drawable.ic_menu_delete);
