@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -69,12 +70,14 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
     DataBaseHandler database;
+    Context context;
     boolean rmMode;
     List<Movie> movies;
 
     public MovieAdapter(Context context, int resource, List<Movie> items, boolean rmMode) {
         super(context, resource, items);
         database = new DataBaseHandler(context, "movies_database");
+        this.context = context;
 
         this.rmMode = rmMode;
         movies = items;
@@ -99,12 +102,12 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
             TextView tv_movieTitle = (TextView) v.findViewById(R.id.tv_movieTitle);
             TextView tv_movieYear = (TextView) v.findViewById(R.id.tv_movieYear);
             ImageView iv_moviePoster = (ImageView) v.findViewById(R.id.iv_moviePoster);
-            Button btn_addToFavorites = (Button) v.findViewById(R.id.btn_addToFavorites);
+            ImageButton btn_addToFavorites = (ImageButton) v.findViewById(R.id.btn_addToFavorites);
 
             new DownloadImageTask(iv_moviePoster).execute(m.getImageUrl());
 
             if(rmMode) {
-                btn_addToFavorites.setText("Remove");
+                btn_addToFavorites.setImageResource(android.R.drawable.ic_menu_delete);
             }
 
             if(tv_movieTitle != null) {
@@ -124,9 +127,11 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
                             database.remove(m.getId());
                             movies.remove(position);
                             notifyDataSetChanged();
+                            Toast.makeText(context, "Удалено из избранного", Toast.LENGTH_SHORT).show();
                         }
                         else {
                             database.put(m);
+                            Toast.makeText(context, "Добавлено в избранное", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
