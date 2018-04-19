@@ -1,5 +1,6 @@
 package com.exampleapp.movieselector;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,11 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse {
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+public class MainActivity extends AppCompatActivity {
 
     ListView movieList;
     MovieAdapter movieAdapter;
@@ -47,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         startActivity(intent);
     }
 
-    @Override
     public void processFinish(String response) {
 
         if(response == null) {
@@ -91,12 +95,20 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
                         searchQuery = searchQuery.replace(" ", "_");
                         if(!searchQuery.isEmpty()) {
-                            httpAsync = new HttpAsync();
-                            httpAsync.delegate = MainActivity.this;
-                            httpAsync.execute(requestUrl + searchQuery);
+
+                            Observable.fromCallable(() -> {
+                                return RequestMovies.request(requestUrl + searchQuery);
+                            })
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe((response) -> {
+                                        processFinish(response);
+                                    });
                         }
                     }
                 }, 700);
+
+
 
                 return true;
             }

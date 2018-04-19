@@ -16,47 +16,36 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RequestMovies {
 
-    private String response;
+    public static String request(String urlString) {
 
-    public String request(String urlString) {
+        String response = "";
+        URL url;
+        HttpURLConnection connection;
 
-        Observable.fromCallable(() -> {
-            URL url;
-            HttpURLConnection connection = null;
-
-            try {
-                url = new URL(urlString);
-                connection = (HttpURLConnection) url.openConnection();
-                int responseCode = connection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    response = readStream(connection.getInputStream());
-                }
-
-                if (connection != null) {
-                    connection.disconnect();
-                }
+        try {
+            url = new URL(urlString);
+            connection = (HttpURLConnection) url.openConnection();
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                response = readStream(connection.getInputStream());
             }
 
-            // perform catch in subscribe method ?
-            catch(MalformedURLException e) {
-                e.printStackTrace();
+            if (connection != null) {
+                connection.disconnect();
             }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
+        }
 
-            return response;
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((result) -> {
-                    response = result;
-                });
+        catch(MalformedURLException e) {
+            e.printStackTrace();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
 
         return response;
     }
 
-    private String readStream(InputStream input) {
+    private static String readStream(InputStream input) {
 
         BufferedReader reader = null;
         StringBuffer responseBuffer = new StringBuffer();
