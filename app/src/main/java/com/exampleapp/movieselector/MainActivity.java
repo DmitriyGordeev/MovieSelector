@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
     ArrayList<Movie> movies;
     HttpAsync httpAsync;
 
+    String requestUrl;
+
     DataBaseHandler database;
 
     @Override
@@ -30,12 +32,13 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        requestUrl = "https://www.omdbapi.com/?apikey=69d51abd&s=";
         database = new DataBaseHandler(this, "movies_database");
         movies = new ArrayList<>();
 
         httpAsync = new HttpAsync();
         httpAsync.delegate = this;
-        httpAsync.execute("https://www.omdbapi.com/?apikey=69d51abd&s=back");
+
     }
 
     public void onFavorites(View view) {
@@ -73,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
             @Override
             public boolean onQueryTextChange(String s) {
+
+                if(!s.isEmpty()) {
+                    httpAsync.execute(requestUrl + s);
+                }
+
                 return false;
             }
         });
