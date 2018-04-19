@@ -51,7 +51,9 @@ class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             e.printStackTrace();
         }
         finally {
-            connection.disconnect();
+            if(connection != null) {
+                connection.disconnect();
+            }
         }
 
         return null;

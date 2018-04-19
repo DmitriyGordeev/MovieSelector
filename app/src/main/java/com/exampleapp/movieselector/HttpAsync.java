@@ -32,7 +32,11 @@ public class HttpAsync extends AsyncTask<String, Integer, String> {
             if(responseCode == HttpURLConnection.HTTP_OK) {
                 response = readStream(connection.getInputStream());
             }
-            connection.disconnect();
+
+            if(connection != null) {
+                connection.disconnect();
+            }
+
             return response;
         }
         catch(MalformedURLException e) {

@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
         database = new DataBaseHandler(this, "movies_database");
         movies = new ArrayList<>();
 
-        httpAsync = new HttpAsync();
-        httpAsync.delegate = this;
-
     }
 
     public void onFavorites(View view) {
@@ -48,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
 
     @Override
     public void processFinish(String response) {
+
+        if(response == null) {
+            return;
+        }
 
         try {
             movies = MovieParser.parse(response);
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse {
             public boolean onQueryTextChange(String s) {
 
                 if(!s.isEmpty()) {
+                    httpAsync = new HttpAsync();
+                    httpAsync.delegate = MainActivity.this;
                     httpAsync.execute(requestUrl + s);
                 }
 
