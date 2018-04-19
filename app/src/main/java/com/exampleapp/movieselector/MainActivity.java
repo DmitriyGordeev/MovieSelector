@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     ListView movieList;
     MovieAdapter movieAdapter;
     ArrayList<Movie> movies;
-    HttpAsync httpAsync;
 
     String requestUrl;
 
