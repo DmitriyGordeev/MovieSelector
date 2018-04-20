@@ -11,7 +11,7 @@ public class App extends Application {
         super.onCreate();
 
         component = DaggerComponent.builder()
-                .dataBaseHandlerModule(new DataBaseHandlerModule(getApplicationContext(), "movies_database"))
+                .dataBaseHandlerModule(new DataBaseHandlerModule(getApplicationContext(), DBInfo.databaseName))
                 .build();
     }
 
