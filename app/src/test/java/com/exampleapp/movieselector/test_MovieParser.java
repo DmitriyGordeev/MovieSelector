@@ -1,5 +1,7 @@
 package com.exampleapp.movieselector;
 
+import junit.framework.Assert;
+
 import org.json.JSONException;
 import org.junit.Test;
 
@@ -41,8 +43,7 @@ public class test_MovieParser {
                 "}";
 
         ArrayList<Movie> movies = MovieParser.parse(json);
-
-
+        Assert.assertEquals(3, movies.size());
 
     }
 }
