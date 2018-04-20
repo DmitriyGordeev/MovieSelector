@@ -18,6 +18,8 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     String requestUrl;
 
+    @Inject
     DataBaseHandler database;
+
     Handler handler;
     String searchQuery;
 
@@ -40,8 +44,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         requestUrl = "https://www.omdbapi.com/?apikey=69d51abd&s=";
-        database = new DataBaseHandler(this, "movies_database");
         movies = new ArrayList<>();
+
+        // database = new DataBaseHandler(this, "movies_database");
+        ((App)getApplicationContext()).getComponent().inject(this);
 
         handler = new Handler();
     }

@@ -14,10 +14,13 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class DataBaseHandler extends SQLiteOpenHelper {
 
     private String db_name;
 
+    @Inject
     public DataBaseHandler(Context context, String name) {
         super(context, name, null, 1);
         db_name = name;
